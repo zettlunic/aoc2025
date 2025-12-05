@@ -37,21 +37,16 @@ with open(filename) as file:
     valid_ranges = [ranges[0]]
     for r in ranges[1:]:
 
-        found=False
-        for (p_idx, p_valid) in enumerate(valid_ranges):
-            if r[0] in range(p_valid[0], p_valid[1] + 1):
-                found=True
-                if r[1] > p_valid[1]:
-                    # update upper bounds
-                    valid_ranges = valid_ranges[:p_idx]
-                    valid_ranges.append((p_valid[0], r[1]))
-                # else:
-                    #swallow
-        
-        if not found:
+        last_range=valid_ranges[-1]
+
+        if r[0] in range(last_range[0], last_range[1] + 1):
+            if r[1] > last_range[1]:
+                # update upper bounds
+                valid_ranges.pop() 
+                valid_ranges.append((last_range[0], r[1]))
+            # else:
+        else:
             valid_ranges.append(r)
-        
-        # print(valid_ranges)
 
     sum=0
     for r in valid_ranges:
