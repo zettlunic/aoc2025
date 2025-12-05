@@ -42,8 +42,7 @@ with open(filename) as file:
         if r[0] in range(last_range[0], last_range[1] + 1):
             if r[1] > last_range[1]:
                 # update upper bounds
-                valid_ranges.pop() 
-                valid_ranges.append((last_range[0], r[1]))
+                valid_ranges[-1] = (last_range[0], r[1])
             # else:
         else:
             valid_ranges.append(r)
